@@ -6,6 +6,4 @@ export interface UnsplashImage {
     regular: string
   }
   alt_description: string | null
-  liked_by_user: boolean
-  likes: number
 } 

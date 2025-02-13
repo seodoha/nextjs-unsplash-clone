@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../common/Button'
-import { UserInfo } from './user/UserInfo'
 
 interface HeaderProps {
   user?: {
@@ -29,7 +28,12 @@ export default function Header({ user }: HeaderProps) {
           </Button>
         </Link>
 
-        {user && <UserInfo name={user.name} email={user.email} />}
+        {user && 
+          <strong className="flex items-center text-gray">
+            <span className="mr-[0.5rem] border-r-2 border-solid border-gray pr-[0.5rem]">{user.name}</span>
+            <span>{user.email}</span>
+          </strong>
+        }
       </div>
     </header>
   )

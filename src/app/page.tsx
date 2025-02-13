@@ -1,5 +1,5 @@
-import NaviBar from './../components/layout/NaviBar'
-import CardList from 'components/layout/CardList'
+import NaviBar from '@/components/layout/NaviBar'
+import CardList from '@/components/layout/CardList'
 
 const menuItems = [
   { name: '배경화면', href: '/background', active: true },
