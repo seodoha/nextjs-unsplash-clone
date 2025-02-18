@@ -1,19 +1,12 @@
-import NaviBar from '@/components/layout/NaviBar'
-import CardList from '@/components/layout/CardList'
-
-const menuItems = [
-  { name: '배경화면', href: '/background', active: true },
-  { name: '자연', href: '/natural', active: false },
-  { name: '텍스쳐쳐', href: '/texture', active: false },
-]
+import { redirect } from 'next/navigation'
+import { Metadata } from 'next'
 
 export default function Home() {
-  return (
-    <>
-      <NaviBar items={menuItems} />
-      <div className="pt-[4rem]">
-        <CardList />
-      </div>
-    </>
-  )
+  redirect('/wallpapers')
+}
+
+export const metadata: Metadata = {
+  title: 'Unsplash Clone - 무료 이미지',
+  description: '아름다운 무료 이미지와 사진을 찾아보세요',
+  keywords: '무료 이미지, 사진, 포토그래피, unsplash',
 }

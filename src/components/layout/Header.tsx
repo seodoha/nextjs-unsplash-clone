@@ -1,12 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../common/Button'
+import { User } from '@/types/layout'
 
 interface HeaderProps {
-  user?: {
-    name: string
-    email: string
-  }
+  user: User
 }
 
 export default function Header({ user }: HeaderProps) {
