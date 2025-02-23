@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import ImageDetail from '@/components/ui/ImageDetail'
-import { getPhotoById } from '@/lib/api'
+import { getPhotoById } from '@/hooks/useImageQuery'
 
 interface PageProps {
   params: Promise<{ id: string }>

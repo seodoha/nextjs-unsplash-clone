@@ -10,9 +10,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1분
-            gcTime: 60 * 1000 * 5, // 5분
+            staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 신선한 상태로 유지
+            gcTime: 1000 * 60 * 30, // 30분 동안 캐시 유지
             retry: 1,
+            refetchOnMount: false,
             refetchOnWindowFocus: false,
           },
         },

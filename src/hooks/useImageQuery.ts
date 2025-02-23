@@ -1,28 +1,27 @@
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
-import { getPhotos, searchPhotos, getPhotoById } from '@/lib/api'
-import type { SearchParams, UnsplashImage } from '@/types/unsplash'
+import { api } from '@/lib/api';
+import { useQuery } from '@tanstack/react-query'
+import { useImageStore } from '@/store/useStore';
 
-export const usePhotosQuery = (page: number = 1) => {
-  return useQuery({
-    queryKey: ['photos', page],
-    queryFn: () => getPhotos(page),
-    placeholderData: (prev: UnsplashImage[] | undefined) => prev ?? [],
-  })
-}
+export const getPhotoById = async (id: string) => {
+  const { data } = await api.get(`/photos/${id}`);
+  return data;
+};
 
-export const useSearchPhotosQuery = (searchParams: SearchParams) => {
-  return useInfiniteQuery({
-    queryKey: ['photos', 'search', searchParams],
-    queryFn: ({ pageParam = 1 }) => searchPhotos({ ...searchParams, page: pageParam }),
-    getNextPageParam: (lastPage, allPages) => allPages.length + 1,
-    initialPageParam: 1,
-  })
-}
-
-export const usePhotoByIdQuery = (id: string) => {
+export const usePhotoByIdQuery = (id: string, options = {}) => {
   return useQuery({
     queryKey: ['photo', id],
     queryFn: () => getPhotoById(id),
-    enabled: !!id,
-  })
-} 
+    ...options
+  });
+};
+
+export const useLikedPhotos = () => {
+  const likedImages = useImageStore((state) => state.likedImages);
+  
+  return useQuery({
+    queryKey: ['likedPhotos'],
+    queryFn: () => likedImages,
+    staleTime: Infinity,  // 스토어의 데이터는 항상 최신으로 간주
+    gcTime: Infinity,  // 캐시도 계속 유지
+  });
+};

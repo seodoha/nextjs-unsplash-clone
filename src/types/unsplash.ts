@@ -17,9 +17,3 @@ export interface UnsplashImage {
   downloads: number
   description: string | null
 }
-
-export interface SearchParams {
-  query: string
-  page?: number
-  per_page?: number
-} 

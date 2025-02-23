@@ -1,18 +1,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../common/Button'
-import { User } from '@/types/layout'
 
-interface HeaderProps {
-  user: User
-}
-
-export default function Header({ user }: HeaderProps) {
+export default function Header() {
   return (
     <header className="sticky left-0 right-0 top-0 z-10 flex h-[6.2rem] items-center justify-between bg-white px-[4rem] py-0">
       <h1>
-        <Link href="/" title="윌로그">
-          <Image src="/images/logo_black.png" width={103} height={30} alt="윌로그 로고" />
+        <Link 
+          href="/wallpapers" 
+          title="윌로그"
+          prefetch
+          scroll={false}
+        >
+          <Image 
+            src="/images/logo_black.png" 
+            width={103} 
+            height={30} 
+            alt="윌로그 로고"
+            priority
+          />
         </Link>
       </h1>
       <div className="flex items-center gap-x-[2.4rem]">
@@ -26,12 +32,10 @@ export default function Header({ user }: HeaderProps) {
           </Button>
         </Link>
 
-        {user && 
-          <strong className="flex items-center text-gray">
-            <span className="mr-[0.5rem] border-r-2 border-solid border-gray pr-[0.5rem]">{user.name}</span>
-            <span>{user.email}</span>
-          </strong>
-        }
+        <strong className="flex items-center text-gray">
+          <span className="mr-[0.5rem] border-r-2 border-solid border-gray pr-[0.5rem]">Evie</span>
+          <span>evie@wilog.io</span>
+        </strong>
       </div>
     </header>
   )

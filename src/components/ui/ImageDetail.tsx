@@ -2,13 +2,18 @@
 
 import Image from 'next/image'
 import { usePhotoByIdQuery } from '@/hooks/useImageQuery'
+import { UnsplashImage } from '@/types/unsplash';
 
 interface ImageDetailProps {
   imageId: string
 }
 
 export default function ImageDetail({ imageId }: ImageDetailProps) {
-  const { data: image, isLoading, isError } = usePhotoByIdQuery(imageId)
+  const { data: image, isLoading, isError } = usePhotoByIdQuery(imageId) as {
+    data: UnsplashImage | undefined;
+    isLoading: boolean;
+    isError: boolean;
+  };
 
   if (isLoading) {
     return (

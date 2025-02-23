@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { useInfiniteImages } from '@/hooks/useInfiniteImages'
+import { useImageStore } from '@/store/useStore'
 import ImageCard from '@/components/ui/ImageCard'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
@@ -18,6 +19,7 @@ export default function CardList({ topic }: CardListProps) {
     isFetchingNextPage,
     status
   } = useInfiniteImages(topic)
+  const setLoadedImages = useImageStore(state => state.setLoadedImages)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,7 +41,11 @@ export default function CardList({ topic }: CardListProps) {
     return () => observer.disconnect()
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
-  const allImages = data?.pages.flat() ?? []
+  const allImages = useMemo(() => data?.pages.flat() ?? [], [data?.pages])
+
+  useEffect(() => {
+    setLoadedImages(allImages)
+  }, [allImages, setLoadedImages])
 
   const getColumnImages = (columnIndex: number) => {
     return allImages

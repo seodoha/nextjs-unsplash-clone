@@ -9,7 +9,7 @@ interface ImageCardProps {
 }
 
 export default function ImageCard({ image }: ImageCardProps) {
-  const { 
+  const {
     addLikedImage, 
     removeLikedImage
   } = useImageStore()
@@ -34,7 +34,9 @@ export default function ImageCard({ image }: ImageCardProps) {
         <Image
           src={image.urls.regular}
           alt={image.alt_description || '언스플래시 이미지'}
-          fill
+          width={image.width}
+          height={image.height}
+          priority
           className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
