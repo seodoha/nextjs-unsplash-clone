@@ -33,7 +33,11 @@ export default async function ImagePage({ params }: PageProps) {
   
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ImageDetail imageId={resolvedParams.id} />
+      <div className="container mx-auto">
+        <div className='max-w-5xl mx-auto'>
+          <ImageDetail imageId={resolvedParams.id} />
+        </div>
+      </div>
     </Suspense>
   )
 }

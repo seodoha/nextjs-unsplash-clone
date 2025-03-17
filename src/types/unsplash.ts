@@ -16,4 +16,5 @@ export interface UnsplashImage {
   likes: number
   downloads: number
   description: string | null
+  views: number
 }
