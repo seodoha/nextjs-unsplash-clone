@@ -59,6 +59,14 @@ export default function CardList({ topic }: CardListProps) {
     return <div className="text-center mt-8">이미지를 불러오는데 실패했습니다.</div>
   }
 
+  if (status === 'pending') {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <LoadingSpinner />
+      </div>
+    )
+  }
+
   return (
     <div className="mx-auto md:w-full md:max-w-[1296px]">
       <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[24px]">

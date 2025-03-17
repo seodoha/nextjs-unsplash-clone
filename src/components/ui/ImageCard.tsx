@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { UnsplashImage } from '@/types/unsplash'
 import { useImageStore } from '@/store/useStore'
 
@@ -9,12 +10,19 @@ interface ImageCardProps {
 }
 
 export default function ImageCard({ image }: ImageCardProps) {
+  const pathname = usePathname();
   const {
     addLikedImage, 
-    removeLikedImage
+    removeLikedImage,
+    setCurrentTopic
   } = useImageStore()
   
   const liked = useImageStore((state) => state.isImageLiked(image.id))
+
+  const handleClick = () => {
+    const topic = pathname.split('/')[1];  // URL에서 토픽 추출
+    setCurrentTopic(topic);
+  }
 
   const toggleLike = () => {
     if (liked) {
@@ -30,6 +38,7 @@ export default function ImageCard({ image }: ImageCardProps) {
         href={`/image/${image.id}`} 
         className="relative block aspect-[3/4] w-full h-full cursor-zoom-in overflow-hidden"
         title={image.alt_description || '언스플래시 이미지'}
+        onClick={handleClick}
       >
         <Image
           src={image.urls.regular}

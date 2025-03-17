@@ -28,3 +28,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   word-break: keep-all;
 }
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}

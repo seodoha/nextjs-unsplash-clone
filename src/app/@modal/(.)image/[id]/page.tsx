@@ -1,7 +1,6 @@
-import { Suspense } from 'react'
 import { Metadata } from 'next'
-import ClientModal from './ClientModal'
 import { getPhotoById } from '@/hooks/useImageQuery'
+import ImageModal from '@/components/ui/ImageModal'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -40,8 +39,9 @@ export default async function InterceptedImagePage({ params }: PageProps) {
   const image = await getPhotoById(resolvedParams.id);
   
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ClientModal imageId={resolvedParams.id} initialData={image} />
-    </Suspense>
+    <ImageModal 
+      imageId={resolvedParams.id}
+      initialData={image}
+    />
   );
 } 
