@@ -1,17 +1,15 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
 import { UnsplashImage } from '@/types/unsplash'
 import { useRouter } from 'next/navigation'
 import ImageDetail from './ImageDetail'
 
 interface ImageModalProps {
-  imageId: string
-  initialData: UnsplashImage
+  image: UnsplashImage
 }
 
-export default function ImageModal({ imageId }: ImageModalProps) {
+export default function ImageModal({ image }: ImageModalProps) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -44,17 +42,19 @@ export default function ImageModal({ imageId }: ImageModalProps) {
         style={{ opacity: 1 }}
       >
         <div 
-          className="relative my-8 w-[90%] max-w-4xl bg-white rounded-lg"
+          className="relative w-[90%] bg-white rounded-lg"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={onClose}
-            className="absolute -right-4 -top-4 z-20 rounded-full bg-white p-2 shadow-md hover:bg-gray-100 transition-colors"
+            className="fixed left-4 top-4 z-20 p-2"
             aria-label="모달 닫기"
           >
-            <XMarkIcon className="h-6 w-6 text-gray-500" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform">
+              <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="white"/>
+            </svg>
           </button>
-          <ImageDetail imageId={imageId} />
+          <ImageDetail image={image} />
         </div>
       </div>
     </dialog>

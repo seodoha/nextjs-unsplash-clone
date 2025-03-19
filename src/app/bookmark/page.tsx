@@ -24,7 +24,6 @@ export default function BookmarkPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">북마크</h1>
       <Suspense fallback={<div>로딩중...</div>}>
         {displayImages.length > 0 ? (
           <div className="mx-auto md:w-full md:max-w-[1296px]">

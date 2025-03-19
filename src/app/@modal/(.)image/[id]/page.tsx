@@ -40,8 +40,7 @@ export default async function InterceptedImagePage({ params }: PageProps) {
   
   return (
     <ImageModal 
-      imageId={resolvedParams.id}
-      initialData={image}
+      image={image}
     />
   );
 } 

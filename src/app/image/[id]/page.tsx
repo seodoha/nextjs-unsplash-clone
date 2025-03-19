@@ -30,13 +30,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ImagePage({ params }: PageProps) {
   const resolvedParams = await params
+  const image = await getPhotoById(resolvedParams.id);
   
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="container mx-auto">
-        <div className='max-w-5xl mx-auto'>
-          <ImageDetail imageId={resolvedParams.id} />
-        </div>
+        <ImageDetail image={image} />
       </div>
     </Suspense>
   )
