@@ -1,5 +1,5 @@
 import CardList from '@/components/layout/CardList'
 
 export default function TexturesPage() {
-  return <CardList topic="textures-patterns" />
+  return <CardList topic="travel" />
 } 

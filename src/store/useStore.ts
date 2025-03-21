@@ -19,7 +19,7 @@ interface ImageState {
 export const useImageStore = create<ImageState>()((set, get) => ({
   loadedImages: [],
   likedImages: [],
-  currentTopic: '',
+  currentTopic: 'wallpapers',
   
   addLikedImage: (image: UnsplashImage) => 
     set((state) => ({

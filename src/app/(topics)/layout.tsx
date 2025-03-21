@@ -3,7 +3,7 @@ import NaviBar from '@/components/layout/NaviBar'
 const menuItems = [
   { name: '배경화면', href: '/wallpapers', active: false },
   { name: '자연', href: '/natural', active: false },
-  { name: '텍스쳐', href: '/textures-patterns', active: false },
+  { name: '여행하다', href: '/travel', active: false },
 ]
 
 export default function TopicsLayout({

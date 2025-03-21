@@ -34,7 +34,7 @@ export default function ImageModal({ image }: ImageModalProps) {
   return (
     <dialog 
       ref={dialogRef}
-      className="bg-transparent p-0 m-0 max-w-none w-full h-full"
+      className="bg-transparent p-0 m-0 max-w-none w-full h-full overflow-x-hidden"
       onClick={onClose}
     >
       <div 
@@ -42,7 +42,7 @@ export default function ImageModal({ image }: ImageModalProps) {
         style={{ opacity: 1 }}
       >
         <div 
-          className="relative w-[90%] bg-white rounded-lg"
+          className="relative w-[90%] bg-white rounded-lg overflow-x-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <button

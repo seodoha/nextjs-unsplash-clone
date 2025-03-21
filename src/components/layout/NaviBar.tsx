@@ -1,8 +1,8 @@
 'use client'
 
+import { useImageStore } from '@/store/useStore'
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/react'
 import NextLink from 'next/link'
-import { usePathname } from 'next/navigation'
 
 interface NavMenuItem {
   name: string
@@ -15,14 +15,19 @@ interface NaviBarProps {
 }
 
 export default function NaviBar({ items }: NaviBarProps) {
-  const pathname = usePathname()
-  
+  const { currentTopic, setCurrentTopic } = useImageStore();
+
   const updatedItems = items.map(item => ({
     ...item,
-    active: pathname === item.href
-  }))
+    active: item.href === '/' + currentTopic
+  }));
 
-  const linkStyle = 'flex items-center h-[4rem] text-[1.4rem] transition duration-300'
+  const linkStyle = 'flex items-center h-[4rem] text-[1.4rem] transition duration-300';
+
+  const handleClick = (href: string) => {
+    const topic = href.slice(1); // 앞의 '/' 제거
+    setCurrentTopic(topic);
+  };
 
   return (
     <Navbar className="top-[6.2rem] bg-white px-[0.5rem]" maxWidth="full">
@@ -37,6 +42,7 @@ export default function NaviBar({ items }: NaviBarProps) {
               href={menu.href}
               className={`${menu.active ? `${linkStyle} font-bold text-[#000000]` : `${linkStyle} text-foreground`}`}
               aria-current={menu.active ? 'page' : undefined}
+              onClick={() => handleClick(menu.href)}
             >
               {menu.name}
             </NextLink>

@@ -45,7 +45,16 @@ export default function ImageDetail({ image }: ImageDetailProps) {
     window.URL.revokeObjectURL(url)
   }
 
-  if (isLoading) {
+  // 이미지 컨테이너 스타일을 상수로 분리
+  const imageContainerStyle = {
+    width: '100%',
+    maxWidth: '100%',
+    aspectRatio: `${image.width} / ${image.height}`,
+    maxHeight: 'calc(100vh - 175px)',
+    height: 'auto'
+  };
+
+  if (isLoading || !data) {
     return (
       <>
         <div className='sticky top-0 z-10'>
@@ -67,13 +76,7 @@ export default function ImageDetail({ image }: ImageDetailProps) {
           <div className="relative w-full flex justify-center">
             <div 
               className="bg-gray-200 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer rounded-lg"
-              style={{
-                width: '100%',
-                maxWidth: '1200px',
-                aspectRatio: `${image.width} / ${image.height}`,
-                maxHeight: 'calc(100vh - 175px)',
-                height: 'auto'
-              }}
+              style={imageContainerStyle}
             />
           </div>
         </div>
@@ -152,20 +155,17 @@ export default function ImageDetail({ image }: ImageDetailProps) {
         </header>
       </div>
       <div className="px-7 py-5">
-        <div className="relative w-full">
-          <Image
-            src={data.urls.regular}
-            alt={data.alt_description || '언스플래시 이미지'}
-            width={data.width}
-            height={data.height}
-            className="max-w-full w-auto mx-auto max-h-[calc(100vh-175px)]"
-            sizes="(min-width: 768px) 100vw, (max-width: 427px) min(100%, 387px), (max-height: 756px) min(100%, 387px), (min-aspect-ratio: 4467/6700) calc((calc(100vh - 175px)) * 0.6667164179104478), calc(100vw - 40px)"
-            style={{
-              backgroundColor: '#595959',
-              aspectRatio: `${data.width} / ${data.height}`,
-            }}
-            priority
-          />
+        <div className="relative w-full flex justify-center">
+          <div style={imageContainerStyle}>
+            <Image
+              src={data.urls.regular}
+              alt={data.alt_description || '언스플래시 이미지'}
+              width={data.width}
+              height={data.height}
+              className="max-w-full w-auto mx-auto rounded-lg h-full"
+              sizes="(min-width: 768px) 100vw, (max-width: 427px) min(100%, 387px), (max-height: 756px) min(100%, 387px), (min-aspect-ratio: 4467/6700) calc((calc(100vh - 175px)) * 0.6667164179104478), calc(100vw - 40px)"
+            />
+          </div>
         </div>
       </div>
       <div className='px-7 py-4'>
