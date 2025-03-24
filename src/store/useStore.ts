@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { UnsplashImage } from '@/types/unsplash'
 
 // 스토어의 상태 타입 정의
-interface ImageState {
+export interface ImageState {
   likedImages: UnsplashImage[]
   addLikedImage: (image: UnsplashImage) => void
   removeLikedImage: (imageId: string) => void
