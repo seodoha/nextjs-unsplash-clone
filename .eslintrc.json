@@ -1,13 +1,95 @@
 {
-  "files": ["**/*.{js,jsx,ts,tsx}"],
-  "plugins": {
-    "next": "@next/eslint-plugin-next"
-  },
+  "extends": "next",
+  "plugins": [
+    "eslint-plugin-simple-import-sort",
+    "unused-imports"
+  ],
   "rules": {
-    "react-hooks/exhaustive-deps": "warn"
-  },
-  "languageOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "react/self-closing-comp": ["error", {
+      "component": true,
+      "html": true
+    }],
+    "react/jsx-first-prop-new-line": "error",
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "never",
+      "exports": "never",
+      "functions": "never"
+    }],
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "eol-last": "error",
+    "semi": ["error", "always"],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+    "unused-imports/no-unused-imports-ts": ["error"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      // camelCase 변수, PascalCase 변수, UPPER_CASE 변수 허용
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+      },
+      // camelCase 함수, PascalCase 함수 허용
+      {
+        "selector": "function",
+        "format": ["camelCase", "PascalCase"]
+      },
+      // PascalCase 클래스, interfaces, type aliases, enums 허용
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      },
+      // interface 앞에 I 사용 불가
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": false
+        }
+      },
+      // typeAlias 앞에 T 사용 불가
+      {
+        "selector": "typeAlias",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^T[A-Z]",
+          "match": false
+        }
+      },
+      // typeParameter 앞에 T 사용 불가
+      {
+        "selector": "typeParameter",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^T[A-Z]",
+          "match": false
+        }
+      }
+    ],
+    // 같은 폴더인 경우를 제외하고 import 경로는 항상 절대 경로를 사용
+    "no-relative-import-paths/no-relative-import-paths": [
+      "warn",
+      { "allowSameFolder": true, "rootDir": "src", "prefix": "@" }
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": false,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": false,
+          "object": false
+        }
+      }
+    ]
   }
 }
