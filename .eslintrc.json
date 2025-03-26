@@ -1,13 +1,13 @@
 {
-  "root": true,
-  "extends": ["next/core-web-vitals"],
-  "parserOptions": {
+  "files": ["**/*.{js,jsx,ts,tsx}"],
+  "plugins": {
+    "next": "@next/eslint-plugin-next"
+  },
+  "rules": {
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "languageOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
-  },
-  "env": {
-    "browser": true,
-    "es2020": true,
-    "node": true
   }
 }
