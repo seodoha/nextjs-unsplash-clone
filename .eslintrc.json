@@ -7,5 +7,10 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrideConfig": {
+    "linterOptions": {
+      "reportUnusedDisableDirectives": true
+    }
   }
 }
