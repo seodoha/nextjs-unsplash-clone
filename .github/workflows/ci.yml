@@ -1,3 +1,4 @@
+# .github/workflows/ci.yml
 name: CI
 
 on:
@@ -19,7 +20,7 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm ci
+        run: npm install  # npm ci 대신 npm install 사용
         
       - name: Type check
         run: npm run type-check
