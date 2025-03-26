@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { UnsplashImage } from '@/types/unsplash'
 import { useRouter } from 'next/navigation'
-import ImageDetail from './ImageDetail'
+import ImageDetail from '../layout/ImageDetail'
 
 interface ImageModalProps {
   image: UnsplashImage

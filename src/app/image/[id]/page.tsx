@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { Metadata } from 'next'
-import ImageDetail from '@/components/ui/ImageDetail'
+import ImageDetail from '@/components/layout/ImageDetail'
 import { getPhotoById } from '@/hooks/useImageQuery'
 
 interface PageProps {
