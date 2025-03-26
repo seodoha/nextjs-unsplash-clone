@@ -20,7 +20,7 @@ jobs:
           cache: 'yarn'
           
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-warnings
+        run: yarn install
         
       - name: Type check
         run: yarn type-check
