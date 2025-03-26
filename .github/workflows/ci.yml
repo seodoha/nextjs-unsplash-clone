@@ -17,19 +17,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'yarn'
           
       - name: Install dependencies
-        run: npm install  # npm ci 대신 npm install 사용
+        run: yarn install --frozen-lockfile
         
       - name: Type check
-        run: npm run type-check
+        run: yarn type-check
         
       - name: Lint
-        run: npm run lint
+        run: yarn lint
         
       - name: Build
-        run: npm run build
+        run: yarn build
         env:
           NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_ACCESS_KEY }}
           NEXT_PUBLIC_UNSPLASH_API_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
