@@ -7,8 +7,16 @@ export const getPhotoById = async (id: string) => {
     const { data } = await api.get(`photos/${id}`);
     
     // 필수 필드 검증
-    if (!data || !data.urls || !data.urls.regular) {
-      throw new Error('Invalid image data received');
+    if (!data) {
+      throw new Error('No data received from API');
+    }
+    
+    if (!data.urls || typeof data.urls !== 'object') {
+      throw new Error('Invalid URLs data structure');
+    }
+    
+    if (!data.urls.regular || typeof data.urls.regular !== 'string') {
+      throw new Error('Missing or invalid regular URL');
     }
     
     return data;

@@ -1,13 +1,15 @@
-export default function TopicsLayout({
+import { Viewport } from 'next'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
+
+export default function BookmarkLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <>
-      <div className="pt-[4rem]">
-        {children}
-      </div>
-    </>
-  )
+  return children
 } 

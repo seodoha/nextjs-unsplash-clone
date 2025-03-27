@@ -1,16 +1,9 @@
 'use client';
 
 import { Suspense, useState, useEffect } from 'react';
-import { Viewport } from 'next';
 import ImageCard from '@/components/ui/ImageCard';
 import { useImageStore } from '@/store/useStore';
 import { UnsplashImage } from '@/types/unsplash';
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-};
 
 export default function BookmarkPage() {
   const likedImages = useImageStore((state) => state.likedImages);
