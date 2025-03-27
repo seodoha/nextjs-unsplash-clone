@@ -18,7 +18,10 @@ describe('ImageDetail', () => {
   // 테스트에 사용할 모의 이미지 데이터
   const mockImage = {
     id: '1',
-    urls: { regular: 'https://example.com/test.jpg' }, // Next.js Image 컴포넌트를 위한 절대 URL
+    urls: { 
+      regular: 'https://example.com/test.jpg',
+      thumb: 'https://example.com/test-thumb.jpg'
+    },
     alt_description: 'Test Image',
     user: {
       name: 'Test User',
