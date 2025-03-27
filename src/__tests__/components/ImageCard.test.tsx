@@ -11,10 +11,16 @@ describe('ImageCard', () => {
     alt_description: 'Test Image',
     user: {
       name: 'Test User',
+      username: 'testuser',
+      profile_image: { medium: 'test.jpg' },
       links: { html: 'https://test.com' }
     },
     width: 800,
-    height: 600
+    height: 600,
+    likes: 100,
+    downloads: 50,
+    views: 200,
+    description: 'Test Description'
   }
 
   it('renders image correctly', () => {
