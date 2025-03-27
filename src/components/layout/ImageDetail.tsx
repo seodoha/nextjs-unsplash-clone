@@ -54,11 +54,21 @@ export default function ImageDetail({ image }: ImageDetailProps) {
     height: 'auto'
   };
 
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <div className="text-center">
+          이미지를 불러오는데 실패했습니다.
+        </div>
+      </div>
+    )
+  }
+
   if (isLoading || !data) {
     return (
       <>
         <div className='sticky top-0 z-10'>
-          <header className='flex justify-between items-center px-7 py-3 bg-white rounded-lg'>
+          <header className='flex justify-between items-center px-7 py-3 bg-white rounded-lg' data-testid="skeleton-header">
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 rounded-full bg-gray-200 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
               <div className="space-y-2">
@@ -77,11 +87,12 @@ export default function ImageDetail({ image }: ImageDetailProps) {
             <div 
               className="bg-gray-200 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer rounded-lg"
               style={imageContainerStyle}
+              data-testid="skeleton-image"
             />
           </div>
         </div>
         <div className='px-7 py-4'>
-          <div className='flex gap-20'>
+          <div className='flex gap-20' data-testid="skeleton-stats">
             <div>
               <div className="w-12 h-4 mb-1 bg-gray-200 rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
               <div className="w-8 h-4 bg-gray-200 rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
@@ -93,16 +104,6 @@ export default function ImageDetail({ image }: ImageDetailProps) {
           </div>
         </div>
       </>
-    )
-  }
-
-  if (isError || !data) {
-    return (
-      <div className="flex items-center justify-center">
-        <div className="text-center">
-          이미지를 불러오는데 실패했습니다.
-        </div>
-      </div>
     )
   }
 

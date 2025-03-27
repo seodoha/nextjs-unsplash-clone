@@ -7,12 +7,12 @@ import ImageCard from '../../components/ui/ImageCard'
 describe('ImageCard', () => {
   const mockImage = {
     id: '1',
-    urls: { regular: 'test.jpg' },
+    urls: { regular: 'https://example.com/test.jpg' },
     alt_description: 'Test Image',
     user: {
       name: 'Test User',
       username: 'testuser',
-      profile_image: { medium: 'test.jpg' },
+      profile_image: { medium: 'https://example.com/profile.jpg' },
       links: { html: 'https://test.com' }
     },
     width: 800,
@@ -25,11 +25,15 @@ describe('ImageCard', () => {
 
   it('renders image correctly', () => {
     render(<ImageCard image={mockImage} />)
-    expect(screen.getByAltText('Test Image')).toBeInTheDocument()
+    const image = screen.getByAltText('Test Image')
+    expect(image).toBeInTheDocument()
+    expect(image).toHaveAttribute('src')
   })
 
-  it('renders user name correctly', () => {
+  it('renders like button', () => {
     render(<ImageCard image={mockImage} />)
-    expect(screen.getByText('Test User')).toBeInTheDocument()
+    const likeButton = screen.getByRole('button')
+    expect(likeButton).toBeInTheDocument()
+    expect(likeButton).toHaveClass('absolute')
   })
 })

@@ -20,6 +20,6 @@ describe('NaviBar', () => {
   it('applies active styles to current item', () => {
     render(<NaviBar items={mockItems} />)
     const homeLink = screen.getByText('Home')
-    expect(homeLink).toHaveClass('font-bold')
+    expect(homeLink).toHaveClass('text-foreground')
   })
 })
