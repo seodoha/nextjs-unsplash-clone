@@ -28,8 +28,19 @@ jobs:
       - name: Lint
         run: yarn eslint .
         
+      - name: Security scan
+        run: yarn audit
+        
+      - name: Test
+        run: yarn test
+        
       - name: Build
         run: yarn build
         env:
           NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_ACCESS_KEY }}
           NEXT_PUBLIC_UNSPLASH_API_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          
+      - name: Performance check
+        run: |
+          yarn add -D lighthouse
+          npx lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json
