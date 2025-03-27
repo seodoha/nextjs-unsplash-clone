@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.unsplash.com',
   headers: {
     'Authorization': `Client-ID ${process.env.NEXT_PUBLIC_ACCESS_KEY}`
   },

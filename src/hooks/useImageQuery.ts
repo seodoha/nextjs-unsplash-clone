@@ -3,8 +3,19 @@ import { useQuery } from '@tanstack/react-query'
 import { useImageStore } from '@/store/useStore';
 
 export const getPhotoById = async (id: string) => {
-  const { data } = await api.get(`/photos/${id}`);
-  return data;
+  try {
+    const { data } = await api.get(`photos/${id}`);
+    
+    // 필수 필드 검증
+    if (!data || !data.urls || !data.urls.regular) {
+      throw new Error('Invalid image data received');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch photo:', error);
+    throw error;
+  }
 };
 
 export const usePhotoByIdQuery = (id: string, options = {}) => {

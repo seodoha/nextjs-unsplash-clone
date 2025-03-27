@@ -1,6 +1,12 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import CardList from '@/components/layout/CardList'
 import { api } from '@/lib/api'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export const metadata: Metadata = {
   title: '자연 사진 | Unsplash Clone',
@@ -12,13 +18,18 @@ export const metadata: Metadata = {
 export const revalidate = 3600 // 1시간마다 재생성
 
 async function getInitialImages() {
-  const { data } = await api.get('topics/nature/photos', {
-    params: {
-      per_page: 30,
-      page: 1
-    }
-  })
-  return data
+  try {
+    const { data } = await api.get('topics/nature/photos', {
+      params: {
+        per_page: 30,
+        page: 1
+      }
+    })
+    return data
+  } catch (error) {
+    console.error('Failed to fetch nature images:', error)
+    return []
+  }
 }
 
 export default async function NaturePage() {
