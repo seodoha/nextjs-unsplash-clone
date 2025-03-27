@@ -9,8 +9,17 @@ const inter = Inter({ subsets: ['latin'] })
 
 // 메타데이터를 별도의 상수로 분리
 export const metadata: Metadata = {
-  title: 'Unsplash Clone',
-  description: 'Unsplash Clone',
+  title: 'Unsplash Clone - 무료 고화질 이미지',
+  description: 'Unsplash API를 활용한 무료 고화질 이미지 갤러리입니다. 배경화면, 자연, 여행 등 다양한 카테고리의 이미지를 제공합니다.',
+  keywords: '무료 이미지, 고화질, 배경화면, 자연, 여행, unsplash',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+  robots: 'index, follow',
+  openGraph: {
+    title: 'Unsplash Clone - 무료 고화질 이미지',
+    description: 'Unsplash API를 활용한 무료 고화질 이미지 갤러리입니다.',
+    type: 'website',
+    locale: 'ko_KR',
+  },
 }
 
 export default function RootLayout({

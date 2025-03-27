@@ -11,6 +11,9 @@ export const usePhotoByIdQuery = (id: string, options = {}) => {
   return useQuery({
     queryKey: ['photo', id],
     queryFn: () => getPhotoById(id),
+    staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 신선한 것으로 간주
+    gcTime: 1000 * 60 * 30, // 30분 동안 캐시 유지
+    retry: 2, // 실패 시 2번만 재시도
     ...options
   });
 };

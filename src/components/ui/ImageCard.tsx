@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UnsplashImage } from '@/types/unsplash'
 import { useImageStore } from '@/store/useStore'
+import { memo, useCallback } from 'react'
 
 interface ImageCardProps {
   image: UnsplashImage
+  priority?: boolean
 }
 
-export default function ImageCard({ image }: ImageCardProps) {
+const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCardProps) {
   const pathname = usePathname();
   const {
     addLikedImage, 
@@ -19,18 +21,18 @@ export default function ImageCard({ image }: ImageCardProps) {
   
   const liked = useImageStore((state) => state.isImageLiked(image.id))
 
-  const handleClick = () => {
-    const topic = pathname.split('/')[1];  // URL에서 토픽 추출
+  const handleClick = useCallback(() => {
+    const topic = pathname.split('/')[1];
     setCurrentTopic(topic);
-  }
+  }, [pathname, setCurrentTopic]);
 
-  const toggleLike = () => {
+  const toggleLike = useCallback(() => {
     if (liked) {
       removeLikedImage(image.id)
     } else {
       addLikedImage(image)
     }
-  }
+  }, [liked, image, removeLikedImage, addLikedImage]);
 
   return (
     <div className="group relative w-full overflow-hidden">
@@ -45,9 +47,16 @@ export default function ImageCard({ image }: ImageCardProps) {
           alt={image.alt_description || '언스플래시 이미지'}
           width={image.width}
           height={image.height}
-          priority
-          className="absolute inset-0 h-full w-full object-cover transition-transform group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={priority}
+          loading={priority ? "eager" : "lazy"}
+          quality={75}
+          className="absolute inset-0 h-full w-full object-cover transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          placeholder="blur"
+          blurDataURL={image.urls.thumb}
+          onLoadingComplete={(image) => {
+            image.classList.add('loaded')
+          }}
         />
       </Link>
       <button 
@@ -68,4 +77,6 @@ export default function ImageCard({ image }: ImageCardProps) {
       </button>
     </div>
   )
-} 
+})
+
+export default ImageCard; 

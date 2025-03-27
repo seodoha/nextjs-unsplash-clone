@@ -18,6 +18,8 @@ export default function Header() {
             height={30} 
             alt="윌로그 로고"
             priority
+            quality={100}
+            loading="eager"
           />
         </Link>
       </h1>

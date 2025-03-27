@@ -4,6 +4,7 @@ export interface UnsplashImage {
   height: number
   urls: {
     regular: string
+    thumb: string
   }
   alt_description: string | null
   user: {
