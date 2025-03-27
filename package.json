@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "audit": "npm audit",
-    "lighthouse": "lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json --chrome-flags=\"--headless --disable-gpu --no-sandbox --disable-software-rasterizer\""
+    "lighthouse": "lighthouse --config-path=lighthouse.config.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",

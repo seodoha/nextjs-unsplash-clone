@@ -39,8 +39,3 @@ jobs:
         env:
           NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_ACCESS_KEY }}
           NEXT_PUBLIC_UNSPLASH_API_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
-          
-      - name: Performance check
-        run: |
-          yarn add -D lighthouse
-          npx lighthouse http://localhost:3000 --output=json --output-path=./lighthouse-report.json
