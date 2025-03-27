@@ -1,8 +1,14 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  timeout: 5000,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Authorization': `Client-ID ${process.env.NEXT_PUBLIC_ACCESS_KEY}`
+  },
+  // SSRF 방지를 위한 설정
+  validateStatus: (status) => status < 500,
+  maxRedirects: 0,
+  timeout: 5000
 })
 
 // 인터셉터 설정
