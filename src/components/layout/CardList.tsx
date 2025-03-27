@@ -41,7 +41,10 @@ export default function CardList({ topic }: CardListProps) {
     return () => observer.disconnect()
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
-  const allImages = useMemo(() => data?.pages.flat() ?? [], [data?.pages])
+  const allImages = useMemo(() => {
+    const images = data?.pages.flat() ?? []
+    return images.filter(image => image && image.urls && image.urls.regular)
+  }, [data?.pages])
 
   useEffect(() => {
     setLoadedImages(allImages)
@@ -50,8 +53,11 @@ export default function CardList({ topic }: CardListProps) {
   const getColumnImages = (columnIndex: number) => {
     return allImages
       .filter((_, index) => index % 3 === columnIndex)
-      .map((image) => (
-        <ImageCard key={image.id} image={image} />
+      .map((image, index) => (
+        <ImageCard 
+          key={`${columnIndex}-${image.id}-${index}`} 
+          image={image} 
+        />
       ))
   }
 
@@ -67,12 +73,20 @@ export default function CardList({ topic }: CardListProps) {
     )
   }
 
+  if (!allImages.length) {
+    return (
+      <div className="text-center mt-8 text-gray-500">
+        표시할 이미지가 없습니다.
+      </div>
+    )
+  }
+
   return (
     <div className="mx-auto md:w-full md:max-w-[1296px]">
       <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[24px]">
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(0)}</div>
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(1)}</div>
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(2)}</div>
+        <div key="column-0" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(0)}</div>
+        <div key="column-1" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(1)}</div>
+        <div key="column-2" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(2)}</div>
       </div>
       
       <div 

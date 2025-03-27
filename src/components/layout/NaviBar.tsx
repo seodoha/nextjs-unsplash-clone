@@ -19,13 +19,13 @@ export default function NaviBar({ items }: NaviBarProps) {
 
   const updatedItems = items.map(item => ({
     ...item,
-    active: item.href === '/' + currentTopic
+    active: item.href.slice(1) === currentTopic
   }));
 
   const linkStyle = 'flex items-center h-[4rem] text-[1.4rem] transition duration-300';
 
   const handleClick = (href: string) => {
-    const topic = href.slice(1); // 앞의 '/' 제거
+    const topic = href.slice(1);
     setCurrentTopic(topic);
   };
 

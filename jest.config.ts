@@ -10,19 +10,15 @@ const customJestConfig: Config = {
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@store/(.*)$': '<rootDir>/src/store/$1'
   },
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
   moduleDirectories: ['node_modules', '<rootDir>/src'],
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      tsconfig: 'tsconfig.json'
-    }]
+    '^.+\\.(ts|tsx)$': 'ts-jest'
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json'
-    }
-  }
+  modulePaths: ['<rootDir>/src']
 }
 
 export default createJestConfig(customJestConfig)

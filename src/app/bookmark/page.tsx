@@ -11,14 +11,18 @@ export default function BookmarkPage() {
 
   // 컴포넌트 마운트 시에만 이미지 목록 초기화
   useEffect(() => {
-    setDisplayImages(likedImages);
+    const validImages = likedImages.filter(image => image && image.urls && image.urls.regular);
+    setDisplayImages(validImages);
   }, []); // 빈 의존성 배열로 마운트 시에만 실행
 
   const getColumnImages = (columnIndex: number) => {
     return displayImages
       .filter((_, index) => index % 3 === columnIndex)
-      .map((image) => (
-        <ImageCard key={image.id} image={image} />
+      .map((image, index) => (
+        <ImageCard 
+          key={`${columnIndex}-${image.id}-${index}`} 
+          image={image} 
+        />
       ));
   };
 
@@ -28,9 +32,9 @@ export default function BookmarkPage() {
         {displayImages.length > 0 ? (
           <div className="mx-auto md:w-full md:max-w-[1296px]">
             <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[24px]">
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(0)}</div>
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(1)}</div>
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(2)}</div>
+              <div key="column-0" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(0)}</div>
+              <div key="column-1" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(1)}</div>
+              <div key="column-2" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(2)}</div>
             </div>
           </div>
         ) : (
