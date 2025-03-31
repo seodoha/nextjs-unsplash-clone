@@ -30,7 +30,7 @@ export default function NaviBar({ items }: NaviBarProps) {
   };
 
   return (
-    <Navbar className="top-[6.2rem] bg-white px-[0.5rem]" maxWidth="full">
+    <Navbar className="top-[6.2rem] bg-white px-[2rem]" maxWidth="full">
       <NavbarContent className="gap-[2.4rem]">
         {updatedItems.map((menu) => (
           <NavbarItem 

@@ -4,7 +4,7 @@ import { Button } from '../common/Button'
 
 export default function Header() {
   return (
-    <header className="sticky left-0 right-0 top-0 z-10 flex h-[6.2rem] items-center justify-between bg-white px-[4rem] py-0">
+    <header className="sticky left-0 right-0 top-0 z-10 flex h-[6.2rem] items-center justify-between bg-white px-[3rem] py-0">
       <h1>
         <Link 
           href="/wallpapers" 

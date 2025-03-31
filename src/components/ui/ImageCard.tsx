@@ -35,10 +35,10 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
   }, [liked, image, removeLikedImage, addLikedImage]);
 
   return (
-    <div className="group relative w-full overflow-hidden">
+    <div className="group relative overflow-hidden">
       <Link 
         href={`/image/${image.id}`} 
-        className="relative block aspect-[3/4] w-full h-full cursor-zoom-in overflow-hidden"
+        className="h-full w-full"
         title={image.alt_description || '언스플래시 이미지'}
         onClick={handleClick}
       >
@@ -50,7 +50,7 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
           priority={priority}
           loading={priority ? "eager" : "lazy"}
           quality={75}
-          className="absolute inset-0 h-full w-full object-cover transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
+          className="w-full h-full transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           placeholder="blur"
           blurDataURL={image.urls.thumb}
