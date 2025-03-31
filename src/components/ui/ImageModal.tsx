@@ -36,10 +36,12 @@ export default function ImageModal({ image }: ImageModalProps) {
       ref={dialogRef}
       className="bg-transparent p-0 m-0 max-w-none w-full h-full overflow-x-hidden"
       onClick={onClose}
+      data-testid="image-modal-dialog"
     >
       <div 
         className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center overflow-y-auto opacity-0 transition-opacity duration-200"
         style={{ opacity: 1 }}
+        data-testid="image-container"
       >
         <div 
           className="relative w-[90%] bg-white rounded-lg overflow-x-hidden"

@@ -1,107 +1,213 @@
-import React from 'react'
-import '@testing-library/jest-dom'
-import { render } from '@testing-library/react'
-import { screen } from '@testing-library/dom'
-import ImageDetail from '../../components/layout/ImageDetail'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { usePhotoByIdQuery } from '@/hooks/useImageQuery'
+import { render, screen, fireEvent } from '@testing-library/react'
+import ImageDetail from '@/components/layout/ImageDetail'
+import { QueryClient, QueryClientProvider, UseQueryResult } from '@tanstack/react-query'
+import { ImageState } from '@/store/useStore'
+import { UnsplashImage } from '@/types/unsplash'
+import * as useImageQuery from '@/hooks/useImageQuery'
 
-// usePhotoByIdQuery 훅을 모킹하여 테스트에서 사용할 수 있도록 설정
+jest.mock('@/store/useStore', () => ({
+  useImageStore: jest.fn()
+}))
+
 jest.mock('@/hooks/useImageQuery', () => ({
   usePhotoByIdQuery: jest.fn()
 }))
 
-// React Query 클라이언트 인스턴스 생성
-const queryClient = new QueryClient()
+const mockUseImageStore = jest.requireMock('@/store/useStore').useImageStore
+
+const mockUser = {
+  name: '테스트 유저',
+  username: 'testuser',
+  profile_image: {
+    medium: 'https://example.com/profile.jpg'
+  }
+}
+
+const mockImage: UnsplashImage = {
+  id: '123',
+  urls: {
+    regular: 'https://example.com/image.jpg',
+    thumb: 'https://example.com/image-thumb.jpg'
+  },
+  alt_description: '테스트 이미지',
+  description: '테스트 이미지 설명',
+  user: mockUser,
+  likes: 100,
+  downloads: 50,
+  views: 1000,
+  width: 1920,
+  height: 1080
+}
+
+const mockState: Omit<ImageState, 'currentTopic'> & { currentTopic: string | null } = {
+  likedImages: [],
+  loadedImages: [],
+  currentTopic: null,
+  addLikedImage: jest.fn(),
+  removeLikedImage: jest.fn(),
+  isImageLiked: () => false,
+  setLoadedImages: jest.fn(),
+  setCurrentTopic: jest.fn()
+}
 
 describe('ImageDetail', () => {
-  // 테스트에 사용할 모의 이미지 데이터
-  const mockImage = {
-    id: '1',
-    urls: { 
-      regular: 'https://example.com/test.jpg',
-      thumb: 'https://example.com/test-thumb.jpg'
-    },
-    alt_description: 'Test Image',
-    user: {
-      name: 'Test User',
-      username: 'testuser',
-      profile_image: { medium: 'https://example.com/profile.jpg' }, // 프로필 이미지 URL
-      links: { html: 'https://test.com' }
-    },
-    width: 800,
-    height: 600,
-    likes: 100,
-    downloads: 50,
-    views: 200,
-    description: 'Test Description'
-  }
+  let queryClient: QueryClient
 
-  // 각 테스트 케이스 실행 전에 모킹 초기화
   beforeEach(() => {
-    jest.clearAllMocks()
+    queryClient = new QueryClient()
+    mockUseImageStore.mockImplementation((selector?: (state: ImageState) => unknown) => {
+      return selector ? selector(mockState as ImageState) : mockState
+    })
   })
 
-  // 로딩 상태 테스트
   it('renders loading state correctly', () => {
-    // usePhotoByIdQuery 훅이 로딩 상태를 반환하도록 모킹
-    (usePhotoByIdQuery as jest.Mock).mockReturnValue({
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
       data: undefined,
       isLoading: true,
       isError: false
-    })
-
-    // 컴포넌트 렌더링
+    } as UseQueryResult<UnsplashImage, Error>)
+    
     render(
       <QueryClientProvider client={queryClient}>
         <ImageDetail image={mockImage} />
       </QueryClientProvider>
     )
     
-    // 로딩 상태일 때 스켈레톤 UI 요소들이 있는지 확인
     expect(screen.getByTestId('skeleton-header')).toBeInTheDocument()
     expect(screen.getByTestId('skeleton-image')).toBeInTheDocument()
     expect(screen.getByTestId('skeleton-stats')).toBeInTheDocument()
   })
 
-  // 실제 데이터 상태 테스트
-  it('renders user information correctly', () => {
-    // usePhotoByIdQuery 훅이 실제 데이터를 반환하도록 모킹
-    (usePhotoByIdQuery as jest.Mock).mockReturnValue({
-      data: mockImage,
-      isLoading: false,
-      isError: false
-    })
-
-    // 컴포넌트 렌더링
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ImageDetail image={mockImage} />
-      </QueryClientProvider>
-    )
-    
-    // 사용자 정보가 올바르게 렌더링되는지 확인
-    expect(screen.getByText('Test User')).toBeInTheDocument()
-    expect(screen.getByText('@testuser')).toBeInTheDocument()
-  })
-
-  // 에러 상태 테스트
   it('renders error state correctly', () => {
-    // usePhotoByIdQuery 훅이 에러 상태를 반환하도록 모킹
-    (usePhotoByIdQuery as jest.Mock).mockReturnValue({
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: true
-    })
-
-    // 컴포넌트 렌더링
+    } as UseQueryResult<UnsplashImage, Error>)
+    
     render(
       <QueryClientProvider client={queryClient}>
         <ImageDetail image={mockImage} />
       </QueryClientProvider>
     )
     
-    // 에러 메시지가 올바르게 렌더링되는지 확인
-    expect(screen.getByText(/이미지를 불러오는데 실패했습니다/)).toBeInTheDocument()
+    expect(screen.getByText('이미지를 불러오는데 실패했습니다.')).toBeInTheDocument()
+  })
+
+  it('renders image details correctly', () => {
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
+      data: mockImage,
+      isLoading: false,
+      isError: false
+    } as UseQueryResult<UnsplashImage, Error>)
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ImageDetail image={mockImage} />
+      </QueryClientProvider>
+    )
+
+    expect(screen.getByTestId('profile-image')).toBeInTheDocument()
+    expect(screen.getByTestId('main-image')).toBeInTheDocument()
+    expect(screen.getByText('테스트 유저')).toBeInTheDocument()
+    expect(screen.getByText('@testuser')).toBeInTheDocument()
+    expect(screen.getByText('1000')).toBeInTheDocument()
+    expect(screen.getByText('50')).toBeInTheDocument()
+  })
+
+  it('toggles bookmark when heart icon is clicked', () => {
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
+      data: mockImage,
+      isLoading: false,
+      isError: false
+    } as UseQueryResult<UnsplashImage, Error>)
+
+    const addLikedImage = jest.fn()
+    const removeLikedImage = jest.fn()
+    const customState = {
+      ...mockState,
+      addLikedImage,
+      removeLikedImage
+    }
+    mockUseImageStore.mockImplementation((selector?: (state: ImageState) => unknown) => {
+      return selector ? selector(customState as ImageState) : customState
+    })
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ImageDetail image={mockImage} />
+      </QueryClientProvider>
+    )
+
+    const bookmarkButton = screen.getByLabelText('북마크 추가')
+    fireEvent.click(bookmarkButton)
+    expect(addLikedImage).toHaveBeenCalledWith(mockImage)
+  })
+
+  it('shows filled heart icon when image is bookmarked', () => {
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
+      data: mockImage,
+      isLoading: false,
+      isError: false
+    } as UseQueryResult<UnsplashImage, Error>)
+
+    const customState = {
+      ...mockState,
+      isImageLiked: () => true
+    }
+    mockUseImageStore.mockImplementation((selector?: (state: ImageState) => unknown) => {
+      return selector ? selector(customState as ImageState) : customState
+    })
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ImageDetail image={mockImage} />
+      </QueryClientProvider>
+    )
+
+    const heartIcon = screen.getByTestId('heart-icon')
+    expect(heartIcon).toHaveClass('fill-red-500')
+  })
+
+  it('shows outline heart icon when image is not bookmarked', () => {
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
+      data: mockImage,
+      isLoading: false,
+      isError: false
+    } as UseQueryResult<UnsplashImage, Error>)
+
+    const customState = {
+      ...mockState,
+      isImageLiked: () => false
+    }
+    mockUseImageStore.mockImplementation((selector?: (state: ImageState) => unknown) => {
+      return selector ? selector(customState as ImageState) : customState
+    })
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ImageDetail image={mockImage} />
+      </QueryClientProvider>
+    )
+
+    const heartIcon = screen.getByTestId('heart-icon')
+    expect(heartIcon).toHaveClass('fill-[#d1d1d1]')
+  })
+
+  it('renders with correct container classes', () => {
+    jest.spyOn(useImageQuery, 'usePhotoByIdQuery').mockReturnValue({
+      data: mockImage,
+      isLoading: false,
+      isError: false
+    } as UseQueryResult<UnsplashImage, Error>)
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ImageDetail image={mockImage} />
+      </QueryClientProvider>
+    )
+
+    const article = screen.getByRole('article')
+    expect(article).toBeInTheDocument()
   })
 })

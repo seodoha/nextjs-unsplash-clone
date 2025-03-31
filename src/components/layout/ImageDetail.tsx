@@ -108,7 +108,7 @@ export default function ImageDetail({ image }: ImageDetailProps) {
   }
 
   return (
-    <>
+    <article>
       <div className='sticky top-0 z-10'>
         <header className='flex justify-between items-center px-7 py-3 bg-white rounded-lg'>
           <div className="flex items-center space-x-4">
@@ -119,6 +119,7 @@ export default function ImageDetail({ image }: ImageDetailProps) {
                   width={40}
                   height={40}
                   className="rounded-full"
+                  data-testid="profile-image"
                 />
             )}
             <div>
@@ -129,7 +130,11 @@ export default function ImageDetail({ image }: ImageDetailProps) {
             </div>
           </div>
           <div className='flex items-center gap-3'>
-            <button onClick={toggleLike} className='h-[32px] rounded-md border-small px-5 border-[#d1d1d1] group hover:border-black transition-border'>
+            <button 
+              onClick={toggleLike} 
+              className='h-[32px] rounded-md border-small px-5 border-[#d1d1d1] group hover:border-black transition-border'
+              aria-label={liked ? '북마크 제거' : '북마크 추가'}
+            >
               <svg 
                 className={`relative h-[16px] w-[16px] transition-colors ${
                   liked 
@@ -141,6 +146,7 @@ export default function ImageDetail({ image }: ImageDetailProps) {
                 viewBox="0 0 24 24" 
                 version="1.1" 
                 aria-hidden="false"
+                data-testid="heart-icon"
               >
                 <desc lang="en-US">A heart</desc>
                 <path d="M21.424 4.594c-2.101-2.125-5.603-2.125-7.804 0l-1.601 1.619-1.601-1.62c-2.101-2.124-5.603-2.124-7.804 0-2.202 2.126-2.102 5.668 0 7.894L12.019 22l9.405-9.513a5.73 5.73 0 0 0 0-7.893Z"></path>
@@ -165,6 +171,7 @@ export default function ImageDetail({ image }: ImageDetailProps) {
               height={data.height}
               className="max-w-full w-auto mx-auto rounded-lg h-full"
               sizes="(min-width: 768px) 100vw, (max-width: 427px) min(100%, 387px), (max-height: 756px) min(100%, 387px), (min-aspect-ratio: 4467/6700) calc((calc(100vh - 175px)) * 0.6667164179104478), calc(100vw - 40px)"
+              data-testid="main-image"
             />
           </div>
         </div>
@@ -181,6 +188,6 @@ export default function ImageDetail({ image }: ImageDetailProps) {
           </div>
         </div>
       </div>
-    </>
+    </article>
   )
 } 

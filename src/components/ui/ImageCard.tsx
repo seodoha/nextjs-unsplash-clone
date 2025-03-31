@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { UnsplashImage } from '@/types/unsplash'
 import { useImageStore } from '@/store/useStore'
 import { memo, useCallback } from 'react'
+import HeartIcon from '@/components/icons/HeartIcon'
 
 interface ImageCardProps {
   image: UnsplashImage
@@ -16,10 +17,11 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
   const {
     addLikedImage, 
     removeLikedImage,
-    setCurrentTopic
+    setCurrentTopic,
+    isImageLiked
   } = useImageStore()
   
-  const liked = useImageStore((state) => state.isImageLiked(image.id))
+  const liked = isImageLiked(image.id)
 
   const handleClick = useCallback(() => {
     const topic = pathname.split('/')[1];
@@ -35,7 +37,10 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
   }, [liked, image, removeLikedImage, addLikedImage]);
 
   return (
-    <div className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div
+      data-testid="image-card"
+      className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+    >
       <Link 
         href={`/image/${image.id}`} 
         className="block cursor-zoom-in"
@@ -50,31 +55,25 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
           priority={priority}
           loading={priority ? "eager" : "lazy"}
           quality={75}
-          className="w-full transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
+          className="w-full h-full object-cover transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           placeholder="blur"
           blurDataURL={image.urls.thumb}
-          onLoadingComplete={(image) => {
-            image.classList.add('loaded')
+          onLoad={(event) => {
+            const img = event.target as HTMLImageElement
+            img.classList.add('loaded')
           }}
         />
       </Link>
       <button 
         onClick={toggleLike}
         className="absolute right-4 top-4 rounded-full bg-white/90 p-2 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white"
-        aria-label={liked ? '좋아요 취소' : '좋아요'}
+        aria-label={liked ? '북마크 취소' : '북마크 추가'}
       >
-        <svg 
-          className={`h-5 w-5 ${liked ? 'fill-red-500' : 'fill-gray-700'}`} 
-          width="24" 
-          height="24" 
-          viewBox="0 0 24 24" 
-          version="1.1" 
-          aria-hidden="false"
-        >
-          <desc lang="en-US">A heart</desc>
-          <path d="M21.424 4.594c-2.101-2.125-5.603-2.125-7.804 0l-1.601 1.619-1.601-1.62c-2.101-2.124-5.603-2.124-7.804 0-2.202 2.126-2.102 5.668 0 7.894L12.019 22l9.405-9.513a5.73 5.73 0 0 0 0-7.893Z"></path>
-        </svg>
+        <HeartIcon
+          className={`h-5 w-5 ${liked ? 'fill-red-500' : 'fill-[#d1d1d1]'}`}
+          aria-hidden="true"
+        />
       </button>
     </div>
   )
