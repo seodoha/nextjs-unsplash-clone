@@ -15,15 +15,27 @@ export const viewport: Viewport = {
 
 // 메타데이터를 별도의 상수로 분리
 export const metadata: Metadata = {
-  title: 'Unsplash Clone - 무료 고화질 이미지',
-  description: 'Unsplash API를 활용한 무료 고화질 이미지 갤러리입니다. 배경화면, 자연, 여행 등 다양한 카테고리의 이미지를 제공합니다.',
-  keywords: '무료 이미지, 고화질, 배경화면, 자연, 여행, unsplash',
-  robots: 'index, follow',
-  openGraph: {
-    title: 'Unsplash Clone - 무료 고화질 이미지',
-    description: 'Unsplash API를 활용한 무료 고화질 이미지 갤러리입니다.',
-    type: 'website',
-    locale: 'ko_KR',
+  title: 'Unsplash Clone',
+  description: 'Unsplash API를 활용한 이미지 갤러리 웹 애플리케이션입니다.',
+  icons: {
+    icon: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    apple: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+  },
+  manifest: '/manifest.json',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
   },
 }
 

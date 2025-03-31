@@ -91,10 +91,10 @@ export default function CardList({ topic, initialImages }: CardListProps) {
 
   return (
     <div className="mx-auto md:w-full md:max-w-[1296px]">
-      <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-x-[24px]">
-        <div key="column-0" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(0)}</div>
-        <div key="column-1" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(1)}</div>
-        <div key="column-2" className="grid grid-cols-[minmax(0,1fr)] gap-y-[24px]">{getColumnImages(2)}</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div key="column-0" className="flex flex-col gap-6">{getColumnImages(0)}</div>
+        <div key="column-1" className="flex flex-col gap-6">{getColumnImages(1)}</div>
+        <div key="column-2" className="flex flex-col gap-6">{getColumnImages(2)}</div>
       </div>
       
       <div 

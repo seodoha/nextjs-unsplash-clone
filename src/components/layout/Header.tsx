@@ -4,19 +4,19 @@ import { Button } from '../common/Button'
 
 export default function Header() {
   return (
-    <header className="sticky left-0 right-0 top-0 z-10 flex h-[6.2rem] items-center justify-between bg-white px-[3rem] py-0">
+    <header className="sticky left-0 right-0 top-0 z-10 flex h-[6.2rem] items-center justify-between bg-white px-[4rem] py-0">
       <h1>
         <Link 
           href="/wallpapers" 
-          title="윌로그"
+          title="Unsplash"
           prefetch
           scroll={false}
         >
           <Image 
-            src="/images/logo_black.png" 
-            width={103} 
-            height={30} 
-            alt="윌로그 로고"
+            src="/images/unsplash-logo.svg" 
+            width={32} 
+            height={32} 
+            alt="Unsplash 로고"
             priority
             quality={100}
             loading="eager"

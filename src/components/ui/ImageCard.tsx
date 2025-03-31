@@ -35,10 +35,10 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
   }, [liked, image, removeLikedImage, addLikedImage]);
 
   return (
-    <div className="group relative overflow-hidden">
+    <div className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
       <Link 
         href={`/image/${image.id}`} 
-        className="h-full w-full"
+        className="block cursor-zoom-in"
         title={image.alt_description || '언스플래시 이미지'}
         onClick={handleClick}
       >
@@ -50,7 +50,7 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
           priority={priority}
           loading={priority ? "eager" : "lazy"}
           quality={75}
-          className="w-full h-full transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
+          className="w-full transition-all duration-300 opacity-0 group-hover:scale-105 [&.loaded]:opacity-100"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           placeholder="blur"
           blurDataURL={image.urls.thumb}
@@ -61,10 +61,11 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
       </Link>
       <button 
         onClick={toggleLike}
-        className="absolute right-4 top-4 rounded-full bg-white/80 p-4 opacity-0 transition-opacity group-hover:opacity-100"
+        className="absolute right-4 top-4 rounded-full bg-white/90 p-2 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white"
+        aria-label={liked ? '좋아요 취소' : '좋아요'}
       >
         <svg 
-          className={`relative h-[16px] w-[16px] ${liked ? 'fill-red-500' : 'fill-gray-700'}`} 
+          className={`h-5 w-5 ${liked ? 'fill-red-500' : 'fill-gray-700'}`} 
           width="24" 
           height="24" 
           viewBox="0 0 24 24" 
