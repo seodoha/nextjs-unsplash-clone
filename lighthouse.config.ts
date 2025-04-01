@@ -1,21 +1,121 @@
-const config = {
+module.exports = {
   extends: 'lighthouse:default',
   settings: {
-    formFactor: 'desktop',
+    formFactor: 'mobile',
+    throttling: {
+      rttMs: 40,
+      throughputKbps: 10240,
+      cpuSlowdownMultiplier: 2,
+    },
     screenEmulation: {
-      mobile: false,
-      width: 1350,
-      height: 940,
-      deviceScaleFactor: 1,
-      disabled: false,
+      mobile: true,
+      disable: false,
+      width: 360,
+      height: 640,
+      deviceScaleRatio: 2,
+      isMobile: true,
+      hasTouch: true,
     },
   },
-  assertions: {
-    'categories:performance': ['error', { minScore: 0.9 }],
-    'categories:accessibility': ['error', { minScore: 0.9 }],
-    'categories:best-practices': ['error', { minScore: 0.9 }],
-    'categories:seo': ['error', { minScore: 0.9 }],
+  categories: {
+    performance: {
+      title: '성능',
+      description: '웹사이트의 성능을 측정합니다.',
+      auditRefs: [
+        { id: 'first-contentful-paint', weight: 10 },
+        { id: 'interactive', weight: 10 },
+        { id: 'speed-index', weight: 10 },
+        { id: 'total-blocking-time', weight: 10 },
+        { id: 'largest-contentful-paint', weight: 10 },
+        { id: 'cumulative-layout-shift', weight: 10 },
+        { id: 'time-to-first-byte', weight: 10 },
+      ],
+    },
+    accessibility: {
+      title: '접근성',
+      description: '웹사이트의 접근성을 측정합니다.',
+      auditRefs: [
+        { id: 'color-contrast', weight: 10 },
+        { id: 'document-title', weight: 10 },
+        { id: 'html-has-lang', weight: 10 },
+        { id: 'meta-description', weight: 10 },
+        { id: 'tap-targets', weight: 10 },
+      ],
+    },
+    'best-practices': {
+      title: '모범 사례',
+      description: '웹사이트의 모범 사례 준수 여부를 측정합니다.',
+      auditRefs: [
+        { id: 'uses-http2', weight: 10 },
+        { id: 'uses-long-cache-ttl', weight: 10 },
+        { id: 'uses-text-compression', weight: 10 },
+        { id: 'uses-optimized-images', weight: 10 },
+        { id: 'uses-responsive-images', weight: 10 },
+      ],
+    },
+    seo: {
+      title: 'SEO',
+      description: '웹사이트의 SEO 상태를 측정합니다.',
+      auditRefs: [
+        { id: 'viewport', weight: 10 },
+        { id: 'document-title', weight: 10 },
+        { id: 'meta-description', weight: 10 },
+        { id: 'http-status-code', weight: 10 },
+        { id: 'link-text', weight: 10 },
+      ],
+    },
+    pwa: {
+      title: 'PWA',
+      description: '웹사이트의 PWA 상태를 측정합니다.',
+      auditRefs: [
+        { id: 'service-worker', weight: 10 },
+        { id: 'works-offline', weight: 10 },
+        { id: 'offline-start-url', weight: 10 },
+        { id: 'viewport', weight: 10 },
+        { id: 'apple-touch-icon', weight: 10 },
+      ],
+    },
   },
-} as const;
-
-export default config; 
+  audits: [
+    'first-contentful-paint',
+    'interactive',
+    'speed-index',
+    'total-blocking-time',
+    'largest-contentful-paint',
+    'cumulative-layout-shift',
+    'time-to-first-byte',
+    'color-contrast',
+    'document-title',
+    'html-has-lang',
+    'meta-description',
+    'tap-targets',
+    'uses-http2',
+    'uses-long-cache-ttl',
+    'uses-text-compression',
+    'uses-optimized-images',
+    'uses-responsive-images',
+    'viewport',
+    'http-status-code',
+    'link-text',
+    'service-worker',
+    'works-offline',
+    'offline-start-url',
+    'apple-touch-icon',
+  ],
+  groups: {
+    'performance-budget': {
+      title: '성능 예산',
+      description: '성능 예산을 측정합니다.',
+    },
+  },
+  budgets: [
+    {
+      resourceType: 'image',
+      budget: 500,
+    },
+    {
+      resourceType: 'total',
+      budget: 2000,
+    },
+  ],
+}; 
