@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { UnsplashImage } from '@/types/unsplash'
 import { useImageStore } from '@/store/useStore'
 import { memo, useCallback } from 'react'
-import HeartIcon from '@/components/icons/HeartIcon'
+import { IconHeart } from '../icons'
 
 interface ImageCardProps {
   image: UnsplashImage
@@ -67,11 +67,11 @@ const ImageCard = memo(function ImageCard({ image, priority = false }: ImageCard
       </Link>
       <button 
         onClick={toggleLike}
-        className="absolute right-4 top-4 rounded-full bg-white/90 p-2 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white"
+        className="absolute h-[32px] right-4 top-4 rounded-md px-5 bg-white/90 p-2 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white"
         aria-label={liked ? '북마크 취소' : '북마크 추가'}
       >
-        <HeartIcon
-          className={`h-5 w-5 ${liked ? 'fill-red-500' : 'fill-[#d1d1d1]'}`}
+        <IconHeart
+          className={`h-[16px] w-[16px] ${liked ? 'fill-red-500' : 'fill-[#d1d1d1]'}`}
           aria-hidden="true"
         />
       </button>

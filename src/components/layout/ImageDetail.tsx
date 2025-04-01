@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { usePhotoByIdQuery } from '@/hooks/useImageQuery'
 import { UnsplashImage } from '@/types/unsplash';
 import { useImageStore } from '@/store/useStore';
+import { IconHeart } from '../icons';
 
 interface ImageDetailProps {
   image: UnsplashImage
@@ -135,22 +136,15 @@ export default function ImageDetail({ image }: ImageDetailProps) {
               className='h-[32px] rounded-md border-small px-5 border-[#d1d1d1] group hover:border-black transition-border'
               aria-label={liked ? '북마크 제거' : '북마크 추가'}
             >
-              <svg 
+              <IconHeart 
                 className={`relative h-[16px] w-[16px] transition-colors ${
                   liked 
                     ? 'fill-red-500' 
                     : 'fill-[#d1d1d1] group-hover:fill-black'
-                }`} 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                version="1.1" 
+                }`}
                 aria-hidden="false"
                 data-testid="heart-icon"
-              >
-                <desc lang="en-US">A heart</desc>
-                <path d="M21.424 4.594c-2.101-2.125-5.603-2.125-7.804 0l-1.601 1.619-1.601-1.62c-2.101-2.124-5.603-2.124-7.804 0-2.202 2.126-2.102 5.668 0 7.894L12.019 22l9.405-9.513a5.73 5.73 0 0 0 0-7.893Z"></path>
-              </svg>
+              />
             </button>
             <button 
               onClick={handleDownload} 
