@@ -1,25 +1,20 @@
-import { SVGProps } from "react";
+import { SVGProps, memo, Suspense } from "react";
 import { IconMap, IconMapTypes } from ".";
 
-interface SVGIconProps {
+interface SVGIconProps extends SVGProps<SVGSVGElement> {
   icon: IconMapTypes;
-  className?: string;
-  props?: SVGProps<SVGSVGElement>;
 }
 
-const SVGIcon: React.FC<SVGIconProps> = ({
-  icon,
-  className,
-  props
-}: SVGIconProps) => {
-  const Icon = IconMap[icon as IconMapTypes];
+const SVGIcon = memo(({ icon, ...props }: SVGIconProps) => {
+  const Icon = IconMap[icon];
 
   return (
-    <Icon
-      className={className}
-      {...props}
-    />
+    <Suspense fallback={<div style={{ width: 24, height: 24 }} />}>
+      <Icon {...props} />
+    </Suspense>
   );
-};
+});
+
+SVGIcon.displayName = 'SVGIcon';
 
 export default SVGIcon;

@@ -5,15 +5,17 @@ function defaultIndexTemplate(filePaths) {
   const entries = filePaths.map(({ path: filePath }) => {
     const basename = path.basename(filePath, path.extname(filePath))
     const exportName = /^\d/.test(basename) ? `Svg${basename}` : basename
-    const importLine = `import ${exportName} from './${basename}';`
+    const importLine = `const ${exportName} = lazy(() => import('./${basename}'));`
     return { importLine, exportName }
   })
   
-  return `${entries.map(({ importLine }) => importLine).join('\n')}
+  return `import { lazy } from 'react';
+
+${entries.map(({ importLine }) => importLine).join('\n')}
 
 export const IconMap = {
   ${entries.map(({ exportName }) => exportName).join(',\n  ')}
-} as const
+} as const;
 
 export type IconMapTypes = keyof typeof IconMap;
 `
