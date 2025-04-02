@@ -11,7 +11,7 @@
     "test": "jest",
     "audit": "npm audit",
     "lighthouse": "npx lighthouse http://localhost:3000 --view",
-    "svgr": "svgr --config-file ./svgr.config.ts -- ./public/images/icons"
+    "svgr": "npx @svgr/cli --index-template svgr-template.cjs -- public/images/icons"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",

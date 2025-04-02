@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../common/Button'
-import { IconHeart } from '../icons'
+import SVGIcon from '../icons/SvgIcon'
 
 export default function Header() {
   return (
@@ -28,7 +28,7 @@ export default function Header() {
         <Link href="/bookmark" className="group">
           <Button variant="secondary" title="북마크 화면 바로가기">
             북마크
-            <IconHeart className="relative ml-[0.5rem] h-[16px] w-[16px]" aria-hidden="false" />
+            <SVGIcon icon="IconHeart" className="relative ml-[0.5rem] h-[16px] w-[16px]" aria-hidden="false" />
           </Button>
         </Link>
 

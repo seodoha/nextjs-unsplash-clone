@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from 'react'
 import { UnsplashImage } from '@/types/unsplash'
 import { useRouter } from 'next/navigation'
 import ImageDetail from '../layout/ImageDetail'
-import { IconClose } from '../icons'
+import SVGIcon from '../icons/SvgIcon'
 
 interface ImageModalProps {
   image: UnsplashImage
@@ -64,7 +64,7 @@ export default function ImageModal({ image }: ImageModalProps) {
             className="fixed left-4 top-4 z-20 p-2"
             aria-label="모달 닫기"
           >
-            <IconClose className="group-hover:scale-110 transition-transform" />
+            <SVGIcon icon="IconClose" className="group-hover:scale-110 transition-transform" />
           </button>
           <ImageDetail image={image} />
         </div>

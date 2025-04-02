@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { usePhotoByIdQuery } from '@/hooks/useImageQuery'
 import { UnsplashImage } from '@/types/unsplash';
 import { useImageStore } from '@/store/useStore';
-import { IconHeart } from '../icons';
+import SVGIcon from '../icons/SvgIcon';
 
 interface ImageDetailProps {
   image: UnsplashImage
@@ -136,7 +136,8 @@ export default function ImageDetail({ image }: ImageDetailProps) {
               className='h-[32px] rounded-md border-small px-5 border-[#d1d1d1] group hover:border-black transition-border'
               aria-label={liked ? '북마크 제거' : '북마크 추가'}
             >
-              <IconHeart 
+              <SVGIcon 
+                icon="IconHeart"
                 className={`relative h-[16px] w-[16px] transition-colors ${
                   liked 
                     ? 'fill-red-500' 
