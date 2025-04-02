@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { UnsplashImage } from '@/types/unsplash'
 import { useRouter } from 'next/navigation'
 import ImageDetail from '../layout/ImageDetail'
@@ -14,23 +14,34 @@ export default function ImageModal({ image }: ImageModalProps) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     dialogRef.current?.close();
     router.back();
-  };
+  }, [router]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog) {
       dialog.showModal();
-    }
 
-    return () => {
-      if (dialog?.open) {
-        dialog.close();
-      }
-    };
-  }, []);
+      // ESC 키 이벤트 처리
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          onClose();
+        }
+      };
+
+      dialog.addEventListener('keydown', handleKeyDown);
+
+      return () => {
+        dialog.removeEventListener('keydown', handleKeyDown);
+        if (dialog?.open) {
+          dialog.close();
+        }
+      };
+    }
+  }, [onClose]);
 
   return (
     <dialog 
